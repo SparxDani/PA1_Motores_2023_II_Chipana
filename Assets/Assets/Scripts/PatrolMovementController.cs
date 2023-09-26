@@ -36,4 +36,8 @@ public class PatrolMovementController : MonoBehaviour
     private void CheckFlip(float x_Position){
         spriteRenderer.flipX = (x_Position - transform.position.x) < 0;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        //PlayerController.Destroy
+    }
 }

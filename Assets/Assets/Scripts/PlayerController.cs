@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rayDistance = 10f;
     [SerializeField] private AnimatorController animatorController;
     [SerializeField] private SpriteRenderer spriteRenderer;
+
 
     private void Update() {
         Vector2 movementPlayer = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -32,4 +35,5 @@ public class PlayerController : MonoBehaviour
     private void CheckFlip(float x_Position){
         spriteRenderer.flipX = (x_Position - transform.position.x) < 0;
     }
+
 }
