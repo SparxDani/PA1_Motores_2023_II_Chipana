@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class FollowMovement : MonoBehaviour
 {
-    [SerializeField] private Transform wizTrans;
-    [SerializeField] private Rigidbody2D wizRB;
+    [SerializeField] private Transform enemyTransform;
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float velocityModifier;
+    public BulletController bullet;
     private Transform currentTarget;
     private bool follow;
     private bool isMoving;
+    private bool canShoot = true;
 
     private void Start()
     {
@@ -20,30 +22,40 @@ public class FollowMovement : MonoBehaviour
     {
         if (isMoving)
         {
-            wizRB.velocity = (currentTarget.position - wizTrans.position).normalized * velocityModifier;
+            rb.velocity = (currentTarget.position - enemyTransform.position).normalized * velocityModifier;
+            if (follow && canShoot)
+            {
+                StartCoroutine(ShootBullet());  
+                canShoot = false;
+            }
             Distance();
         }
         else
         {
-            wizRB.velocity = (currentTarget.position - wizTrans.position).normalized * velocityModifier;
+            rb.velocity = (currentTarget.position - enemyTransform.position).normalized * velocityModifier;
             Distance();
         }
     }
 
     private void Distance()
     {
-        if ((currentTarget.position - wizTrans.position).magnitude < 0.05f)
+        if ((currentTarget.position - enemyTransform.position).magnitude < 0.05f)
         {
-            wizTrans.position = currentTarget.position;
+            enemyTransform.position = currentTarget.position;
             isMoving = false;
-            wizRB.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
         }
         else
         {
             isMoving = true;
         }
     }
-
+    IEnumerator ShootBullet()
+    {
+        Instantiate(bullet, enemyTransform.position, Quaternion.identity).SetUpVelocity(rb.velocity, "Enemy");
+        yield return new WaitForSeconds(1f);
+        canShoot = true;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
