@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: 7653002fa76972d46b1bc0e05cc2bfde, type: 2}
   mixerGroup: {fileID: -2508485740620072848, guid: 7653002fa76972d46b1bc0e05cc2bfde, type: 2}
-  channelVolume: 
-  currentVolume: 0
+  channelVolume: SFXVolume
+  currentVolume: 0.94987094
