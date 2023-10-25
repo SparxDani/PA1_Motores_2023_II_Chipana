@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float velocityMultiplier;
     [SerializeField] private int damage;
+    public AudioClip shootSound;
     public event Action<int, HealthBarController> onCollision;
 
     public void SetUpVelocity(Vector2 velocity, string newTag)

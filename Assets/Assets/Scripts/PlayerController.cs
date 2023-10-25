@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,11 +17,45 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private int numberOfProjectiles = 3; 
     [SerializeField] private float spreadAngle = 30f;
+    [SerializeField] public Vector2 movementMap;
+    [SerializeField] public CustomInput movementAction = null;
 
+    private void Awake()
+    {
+        movementAction = new CustomInput();
+        myRBD2 = GetComponent<Rigidbody2D>();
+    }
+    private void OnEnable()
+    {
+        movementAction.Enable();
+        movementAction.Game.Movement.performed += OnMovementPerformed;
+        movementAction.Game.Movement.canceled += OnMovementCanceled;
+    }
+
+    private void OnDisable()
+    {
+        movementAction.Disable();
+        movementAction.Game.Movement.performed -= OnMovementPerformed;
+        movementAction.Game.Movement.canceled -= OnMovementCanceled;
+    }
+    private void OnMovementPerformed(InputAction.CallbackContext on)
+    {
+        movementMap = on.ReadValue<Vector2>();
+    }
+    private void OnMovementCanceled(InputAction.CallbackContext off)
+    {
+        movementMap = Vector2.zero;
+    }
 
     private void Update() {
-        Vector2 movementPlayer = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        Vector3 movementPlayer = new Vector3(movementMap.x, 0f, movementMap.y);
         myRBD2.velocity = movementPlayer * velocityModifier;
+        
+
+
+        //Vector2 movementPlayer = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        //myRBD2.velocity = movementPlayer * velocityModifier;
 
         animatorController.SetVelocity(velocityCharacter: myRBD2.velocity.magnitude);
 
