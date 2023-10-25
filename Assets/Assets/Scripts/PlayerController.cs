@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private int numberOfProjectiles = 3; 
     [SerializeField] private float spreadAngle = 30f;
-    [SerializeField] public Vector2 movementMap;
+    [SerializeField] private Vector2 movementMap;
     [SerializeField] public CustomInput movementAction = null;
 
     private void Awake()
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update() {
 
-        Vector3 movementPlayer = new Vector3(movementMap.x, 0f, movementMap.y);
+        Vector3 movementPlayer = new Vector3(movementMap.x, movementMap.y);
         myRBD2.velocity = movementPlayer * velocityModifier;
         
 
