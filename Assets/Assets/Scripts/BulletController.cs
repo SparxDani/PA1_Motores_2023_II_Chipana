@@ -9,13 +9,23 @@ public class BulletController : MonoBehaviour
     [SerializeField] private float velocityMultiplier;
     [SerializeField] private int damage;
     public AudioClip shootSound;
+    private AudioSource audioSource;
     public event Action<int, HealthBarController> onCollision;
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null )
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
     public void SetUpVelocity(Vector2 velocity, string newTag)
     {
         rb.velocity = velocity * velocityMultiplier;
         gameObject.tag = newTag;
     }
+
     private void OnBecameInvisible()
     {
         Destroy(this.gameObject);

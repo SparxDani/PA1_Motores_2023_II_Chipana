@@ -14,11 +14,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private BulletController bulletPrefab;
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private int numberOfProjectiles = 3; 
     [SerializeField] private float spreadAngle = 30f;
     [SerializeField] private Vector2 movementMap;
     [SerializeField] public CustomInput movementAction = null;
+    [SerializeField] public float fireDelay = 0.5f;
+    [SerializeField] private bool isFiring = false;
+    [SerializeField] private float lastFire = 0.0f;
 
     private void Awake()
     {
@@ -30,6 +34,8 @@ public class PlayerController : MonoBehaviour
         movementAction.Enable();
         movementAction.Game.Movement.performed += OnMovementPerformed;
         movementAction.Game.Movement.canceled += OnMovementCanceled;
+        movementAction.Game.Fire.performed += FirePerformed;
+        movementAction.Game.Fire.canceled += FireCanceled;
     }
 
     private void OnDisable()
@@ -37,29 +43,36 @@ public class PlayerController : MonoBehaviour
         movementAction.Disable();
         movementAction.Game.Movement.performed -= OnMovementPerformed;
         movementAction.Game.Movement.canceled -= OnMovementCanceled;
+        movementAction.Game.Fire.performed -= FirePerformed;
+        movementAction.Game.Fire.canceled -= FireCanceled;
     }
-    private void OnMovementPerformed(InputAction.CallbackContext on)
+    private void OnMovementPerformed(InputAction.CallbackContext obj)
     {
-        movementMap = on.ReadValue<Vector2>();
+        movementMap = obj.ReadValue<Vector2>();
     }
-    private void OnMovementCanceled(InputAction.CallbackContext off)
+    private void OnMovementCanceled(InputAction.CallbackContext obj)
     {
         movementMap = Vector2.zero;
+    }
+    private void FirePerformed(InputAction.CallbackContext obj)
+    {
+        isFiring = true;
+    }
+    private void FireCanceled(InputAction.CallbackContext obj)
+    {
+        isFiring = false;
     }
 
     private void Update() {
 
         Vector3 movementPlayer = new Vector3(movementMap.x, movementMap.y);
         myRBD2.velocity = movementPlayer * velocityModifier;
-        
 
-
-        //Vector2 movementPlayer = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        //myRBD2.velocity = movementPlayer * velocityModifier;
+        Vector2 aimInput = movementAction.Game.Aim.ReadValue<Vector2>();
+        Vector3 mouseInput = Camera.main.ScreenToWorldPoint(new Vector3(aimInput.x, aimInput.y, 0f));
+        CheckFlip(mouseInput.x);
 
         animatorController.SetVelocity(velocityCharacter: myRBD2.velocity.magnitude);
-
-        Vector2 mouseInput = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         CheckFlip(mouseInput.x);
     
@@ -82,6 +95,7 @@ public class PlayerController : MonoBehaviour
     }
     private void LaunchProjectile()
     {
+        BulletController bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         Vector2 mouseInput = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 direction = (mouseInput - (Vector2)transform.position).normalized;

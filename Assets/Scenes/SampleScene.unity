@@ -3153,10 +3153,14 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1273751151}
   projectilePrefab: {fileID: 1859183820}
   projectileSpawnPoint: {fileID: 1220394422}
+  bulletPrefab: {fileID: 0}
   projectileSpeed: 10
   numberOfProjectiles: 3
   spreadAngle: 30
   movementMap: {x: 0, y: 0}
+  fireDelay: 0.5
+  isFiring: 0
+  lastFire: 0
 --- !u!50 &1273751154
 Rigidbody2D:
   serializedVersion: 4
