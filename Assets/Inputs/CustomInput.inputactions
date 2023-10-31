@@ -15,9 +15,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
+                    "name": "FireSingle",
                     "type": "Button",
                     "id": "a17c0c92-4987-4054-8922-e4a46c54e408",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FireTriple",
+                    "type": "Button",
+                    "id": "cd5f5101-9176-4f8c-b6e8-4d2ada5d0aa4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -107,18 +116,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Fire",
+                    "action": "FireSingle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "779380b8-81cc-4821-bf12-5e1312d79936",
+                    "id": "39265a2c-7abd-4752-b666-b204f62f23af",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Fire",
+                    "action": "FireTriple",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

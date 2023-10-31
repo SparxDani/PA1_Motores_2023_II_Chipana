@@ -37,9 +37,18 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""FireSingle"",
                     ""type"": ""Button"",
                     ""id"": ""a17c0c92-4987-4054-8922-e4a46c54e408"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FireTriple"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd5f5101-9176-4f8c-b6e8-4d2ada5d0aa4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -129,18 +138,18 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Fire"",
+                    ""action"": ""FireSingle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""779380b8-81cc-4821-bf12-5e1312d79936"",
+                    ""id"": ""39265a2c-7abd-4752-b666-b204f62f23af"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Fire"",
+                    ""action"": ""FireTriple"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -158,7 +167,8 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
         // Game
         m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
         m_Game_Movement = m_Game.FindAction("Movement", throwIfNotFound: true);
-        m_Game_Fire = m_Game.FindAction("Fire", throwIfNotFound: true);
+        m_Game_FireSingle = m_Game.FindAction("FireSingle", throwIfNotFound: true);
+        m_Game_FireTriple = m_Game.FindAction("FireTriple", throwIfNotFound: true);
         m_Game_Aim = m_Game.FindAction("Aim", throwIfNotFound: true);
     }
 
@@ -222,14 +232,16 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Game;
     private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
     private readonly InputAction m_Game_Movement;
-    private readonly InputAction m_Game_Fire;
+    private readonly InputAction m_Game_FireSingle;
+    private readonly InputAction m_Game_FireTriple;
     private readonly InputAction m_Game_Aim;
     public struct GameActions
     {
         private @CustomInput m_Wrapper;
         public GameActions(@CustomInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Game_Movement;
-        public InputAction @Fire => m_Wrapper.m_Game_Fire;
+        public InputAction @FireSingle => m_Wrapper.m_Game_FireSingle;
+        public InputAction @FireTriple => m_Wrapper.m_Game_FireTriple;
         public InputAction @Aim => m_Wrapper.m_Game_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
@@ -243,9 +255,12 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Fire.started += instance.OnFire;
-            @Fire.performed += instance.OnFire;
-            @Fire.canceled += instance.OnFire;
+            @FireSingle.started += instance.OnFireSingle;
+            @FireSingle.performed += instance.OnFireSingle;
+            @FireSingle.canceled += instance.OnFireSingle;
+            @FireTriple.started += instance.OnFireTriple;
+            @FireTriple.performed += instance.OnFireTriple;
+            @FireTriple.canceled += instance.OnFireTriple;
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
@@ -256,9 +271,12 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Fire.started -= instance.OnFire;
-            @Fire.performed -= instance.OnFire;
-            @Fire.canceled -= instance.OnFire;
+            @FireSingle.started -= instance.OnFireSingle;
+            @FireSingle.performed -= instance.OnFireSingle;
+            @FireSingle.canceled -= instance.OnFireSingle;
+            @FireTriple.started -= instance.OnFireTriple;
+            @FireTriple.performed -= instance.OnFireTriple;
+            @FireTriple.canceled -= instance.OnFireTriple;
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
@@ -291,7 +309,8 @@ public partial class @CustomInput: IInputActionCollection2, IDisposable
     public interface IGameActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
+        void OnFireSingle(InputAction.CallbackContext context);
+        void OnFireTriple(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
     }
 }

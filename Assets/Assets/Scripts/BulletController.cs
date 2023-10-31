@@ -38,7 +38,7 @@ public class BulletController : MonoBehaviour
             {
                 onCollision?.Invoke(damage, other.GetComponent<HealthBarController>());
             }
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 }

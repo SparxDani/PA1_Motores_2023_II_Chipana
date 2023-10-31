@@ -1842,6 +1842,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!114 &667450827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6138661698763159071, guid: d4cda03d23bc90b49af42da881a12973, type: 3}
+  m_PrefabInstance: {fileID: 1070583623107185113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46165f3c927c95740b6763c5b2c5925f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &807356922
 GameObject:
   m_ObjectHideFlags: 0
@@ -3153,11 +3164,12 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1273751151}
   projectilePrefab: {fileID: 1859183820}
   projectileSpawnPoint: {fileID: 1220394422}
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 667450827}
   projectileSpeed: 10
   numberOfProjectiles: 3
   spreadAngle: 30
   movementMap: {x: 0, y: 0}
+  mouseInput: {x: 0, y: 0, z: 0}
   fireDelay: 0.5
   isFiring: 0
   lastFire: 0
