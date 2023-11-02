@@ -22,26 +22,31 @@ public class FollowMovement : MonoBehaviour
     {
         if (isMoving)
         {
-            rb.velocity = (currentTarget.position - enemyTransform.position).normalized * velocityModifier;
+            MoveTowardsTarget();
             if (follow && canShoot)
             {
-                StartCoroutine(ShootBullet());  
+                StartCoroutine(ShootBullet());
                 canShoot = false;
             }
-            Distance();
+            CheckDistance();
         }
         else
         {
-            rb.velocity = (currentTarget.position - enemyTransform.position).normalized * velocityModifier;
-            Distance();
+            MoveTowardsTarget();
+            CheckDistance();
         }
     }
 
-    private void Distance()
+    private void MoveTowardsTarget()
     {
-        if ((currentTarget.position - enemyTransform.position).magnitude < 0.05f)
+        rb.velocity = (currentTarget.position - transform.position).normalized * velocityModifier;
+    }
+
+    private void CheckDistance()
+    {
+        if ((currentTarget.position - transform.position).magnitude < 0.05f)
         {
-            enemyTransform.position = currentTarget.position;
+            transform.position = currentTarget.position;
             isMoving = false;
             rb.velocity = Vector2.zero;
         }
@@ -50,9 +55,10 @@ public class FollowMovement : MonoBehaviour
             isMoving = true;
         }
     }
+
     IEnumerator ShootBullet()
     {
-        Instantiate(bullet, enemyTransform.position, Quaternion.identity).SetUpVelocity(rb.velocity, "Enemy");
+        Instantiate(bullet, transform.position, Quaternion.identity).SetUpVelocity(rb.velocity, "Enemy");
         yield return new WaitForSeconds(1f);
         canShoot = true;
     }

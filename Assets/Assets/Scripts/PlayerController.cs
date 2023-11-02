@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rayDistance = 10f;
     [SerializeField] private AnimatorController animatorController;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private BulletController bulletPrefab;
     [SerializeField] private float projectileSpeed = 10f;
@@ -22,9 +21,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 movementMap;
     [SerializeField] private Vector3 mouseInput;
     [SerializeField] public CustomInput movementAction = null;
-    [SerializeField] public float fireDelay = 0.5f;
-    [SerializeField] private bool isFiring = false;
-    [SerializeField] private float lastFire = 0.0f;
 
     
     private void Awake()
